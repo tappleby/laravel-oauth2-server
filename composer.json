@@ -1,0 +1,37 @@
+{
+  "name": "tappleby/laravel-oauth2-server",
+  "description": "Wrapper around bshaffer/oauth2-server-php library for use with Laravel 4.",
+  "authors": [
+    {
+      "name": "Terry Appleby",
+      "email": "terry.appleby@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0",
+    "illuminate/support": "4.0.x",
+    "illuminate/auth": "4.0.x",
+    "illuminate/database": "4.0.x",
+    "illuminate/routing": "4.0.x",
+    "bshaffer/oauth2-server-php": "v0.9",
+    "bshaffer/oauth2-server-httpfoundation-bridge": "v0.9"
+  },
+  "require-dev": {
+    "mockery/mockery": "0.8.*",
+    "phpunit/phpunit": "3.7.*"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "Tappleby\\OAuth2": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+
+  "XXX": {
+    "tappleby/laravel-oauth2-server-interface": "1.0.X"
+  }
+
+
+
+}
