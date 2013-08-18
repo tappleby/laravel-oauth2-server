@@ -55,7 +55,7 @@ class AccessTokenStorageTest extends \PHPUnit_Framework_TestCase {
 
     $accessTokenStorage = new AccessTokenStorage($accessTokenRepo);
 
-    $this->assertEquals($accessTokenStorage->setAccessToken(1,2,3,4, 'foo bar'), 'fizbin');
+    $this->assertEquals($accessTokenStorage->setAccessToken(1,2,3,4, 'foo bar'), 'fizbin', 'Did not return result from AccessTokenRepositoryInterface::create');
   }
 
 
