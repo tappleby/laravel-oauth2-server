@@ -2,7 +2,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/tappleby/laravel-oauth2-server-common"
+      "url": "git@github.com:tappleby/laravel-oauth2-server-common.git"
     }
   ],
   "name": "tappleby/laravel-oauth2-server",
