@@ -22,7 +22,6 @@ class Controller extends IlluminateController {
 		$this->server = $server;
 	}
 
-
 	public function callAction(Container $container, Router $router, $method, $parameters)
 	{
 		$this->request = $router->getRequest();
