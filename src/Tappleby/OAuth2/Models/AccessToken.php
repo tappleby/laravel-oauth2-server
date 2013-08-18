@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class AccessToken extends Model implements AccessTokenInterface {
 
-	protected $table = 'oauth_access_tokens';
+  public $incrementing = false;
 
-	protected $guarded = array('id');
+  protected $table = 'oauth_access_tokens';
+	protected $guarded = array();
 
 
 	/**
@@ -17,7 +18,7 @@ class AccessToken extends Model implements AccessTokenInterface {
 	 */
 	function getId()
 	{
-		return $this->access_token;
+		return $this->id;
 	}
 
 	/**

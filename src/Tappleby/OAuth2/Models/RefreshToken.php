@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class RefreshToken extends Model implements RefreshTokenInterface {
 
-	protected $table = 'oauth_refresh_tokens';
+  public $incrementing = false;
 
-	protected $guarded = array('id');
+	protected $table = 'oauth_refresh_tokens';
+  protected $guarded = array();
 
 
 	/**
@@ -17,7 +18,7 @@ class RefreshToken extends Model implements RefreshTokenInterface {
 	 */
 	function getId()
 	{
-		return $this->refresh_token;
+		return $this->id;
 	}
 
 	/**

@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClientCredentials extends Model implements ClientCredentialsInterface {
 
-	protected $table = 'oauth_clients';
+  public $incrementing = false;
 
-	protected $guarded = array('id');
+	protected $table = 'oauth_clients';
+  protected $guarded = array();
 
 	/**
 	 * >=40 character client id.
@@ -18,7 +19,7 @@ class ClientCredentials extends Model implements ClientCredentialsInterface {
 	 */
 	function getId()
 	{
-		return $this->client_id;
+		return $this->id;
 	}
 
 	/**
@@ -28,7 +29,7 @@ class ClientCredentials extends Model implements ClientCredentialsInterface {
 	 */
 	function getSecret()
 	{
-		return $this->client_secret;
+		return $this->secret;
 	}
 
 	/**
