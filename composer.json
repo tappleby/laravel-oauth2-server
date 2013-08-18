@@ -1,4 +1,10 @@
 {
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/tappleby/laravel-oauth2-server-common"
+    }
+  ],
   "name": "tappleby/laravel-oauth2-server",
   "description": "Wrapper around bshaffer/oauth2-server-php library for use with Laravel 4.",
   "authors": [
@@ -14,7 +20,8 @@
     "illuminate/database": "4.0.x",
     "illuminate/routing": "4.0.x",
     "bshaffer/oauth2-server-php": "v0.9",
-    "bshaffer/oauth2-server-httpfoundation-bridge": "v0.9"
+    "bshaffer/oauth2-server-httpfoundation-bridge": "v0.9",
+    "tappleby/laravel-oauth2-server-common": "dev-master"
   },
   "require-dev": {
     "mockery/mockery": "0.8.*",
@@ -26,12 +33,5 @@
       "Tappleby\\OAuth2": "src/"
     }
   },
-  "minimum-stability": "dev",
-
-  "XXX": {
-    "tappleby/laravel-oauth2-server-interface": "1.0.X"
-  }
-
-
-
+  "minimum-stability": "dev"
 }
