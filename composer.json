@@ -1,10 +1,4 @@
 {
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:tappleby/laravel-oauth2-server-common.git"
-    }
-  ],
   "name": "tappleby/laravel-oauth2-server",
   "description": "Wrapper around bshaffer/oauth2-server-php library for use with Laravel 4.",
   "authors": [
