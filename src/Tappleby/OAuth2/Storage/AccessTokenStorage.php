@@ -17,23 +17,26 @@ class AccessTokenStorage implements \OAuth2_Storage_AccessTokenInterface {
 
 	public function getAccessToken($oauth_token)
 	{
+    $retData = null;
 		$token = $this->repo->find($oauth_token);
 
-		if(!$token) return null;
+    if($token) {
+      $scope = null;
 
-		$scope = null;
+      if(is_array($token->getScopes())) {
+        $scope = implode(' ', $token->getScopes());
+      }
 
-		if(is_array($token->getScopes())) {
-			$scope = implode(' ', $token->getScopes());
-		}
+      $retData = array(
+        'client_id' => $token->getClientId(),
+        'user_id' => $token->getUserId(),
+        'expires' => $token->getExpires(),
+        'scope' => $scope
+      );
+    }
 
-		return array(
-			'client_id' => $token->getClientId(),
-			'user_id' => $token->getUserId(),
-			'expires' => $token->getExpires(),
-			'scope' => $scope
-		);
-	}
+    return $retData;
+  }
 
 	public function setAccessToken($oauth_token, $client_id, $user_id, $expires, $scope = null)
 	{
