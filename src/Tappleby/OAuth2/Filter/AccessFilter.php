@@ -33,44 +33,13 @@ class AccessFilter {
 		$this->userProvider = $userProvider;
 	}
 
-	protected function verifyResourceRequest(&$outToken,BridgeRequest $request, BridgeResponse $response, $scope = null)
-	{
-		$token = $this->server->getAccessTokenData($request, $response, $scope);
-
-		// Check if we have token data
-		if (is_null($token)) {
-			return false;
-		}
-
-		$outToken = $token;
-
-		/**
-		 * Check scope, if provided
-		 * If token doesn't have a scope, it's null/empty, or it's insufficient, then throw 403
-		 * @see http://tools.ietf.org/html/rfc6750#section-3.1
-		 */
-		if ($scope && (!isset($token["scope"]) || !$token["scope"] || !$this->server->getScopeUtil()->checkScope($scope, $token["scope"]))) {
-			$response->setError(403, 'insufficient_scope', 'The request requires higher privileges than provided by the access token');
-			$response->addHttpHeaders(array(
-					'WWW-Authenticate' => sprintf('%s realm="%s", scope="%s", error="%s", error_description="%s"',
-						$this->tokenType->getTokenType(),
-						$this->config['www_realm'],
-						$scope,
-						$response->getParameter('error'),
-						$response->getParameter('error_description')
-					)
-				));
-			return false;
-		}
-
-		return (bool)$token;
-	}
-
-	public function filter($route, $request, $scope=null) {
-		if($scope) {
-			$scope = explode(' ', $scope);
-		}
-
+  /**
+   * @param $route
+   * @param $request
+   * @param null $scope
+   * @return null|BridgeResponse
+   */
+  public function filter($route, $request, $scope=null) {
 		$beforeAccessResult = $this->dispatcher->until('oauth.access.before', array($scope));
 
 		if($beforeAccessResult) return null;
@@ -79,13 +48,14 @@ class AccessFilter {
 		$bridgeRequest = BridgeRequest::createFromRequest($request);
 		$bridgeResponse = new BridgeResponse;
 
+    $resController = $this->server->getResourceController();
 
-
-		if(! $this->verifyResourceRequest($token, $bridgeRequest, $bridgeResponse, $scope) ) {
-			$this->dispatcher->fire('oauth.access.failed');
+    if(!$resController->verifyResourceRequest($bridgeRequest, $bridgeResponse, $scope) ) {
+      $this->dispatcher->fire('oauth.access.failed');
 			return $bridgeResponse;
-		}
+    }
 
+    $token = $resController->getAccessTokenData($bridgeRequest, $bridgeResponse);
 
 		$client = $this->clientRepo->find( $token['client_id'] );
 		$tokenScope = $token['scope'];
@@ -94,6 +64,10 @@ class AccessFilter {
 		if(isset($token['user_id'])) {
 			$user = $this->userProvider->retrieveById($token['user_id']);
 		}
+
+    if($tokenScope) {
+      $tokenScope = explode(' ', $tokenScope);
+    }
 
 		$eventPayload = array($client, $user, $tokenScope);
 		$this->dispatcher->fire('oauth.access.valid', $eventPayload);
