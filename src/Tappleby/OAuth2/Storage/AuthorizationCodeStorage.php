@@ -30,6 +30,7 @@ class AuthorizationCodeStorage implements \OAuth2_Storage_AuthorizationCodeInter
 
       $retData = array(
         'client_id' => $code->getClientId(),
+        'user_id' => $code->getUserId(),
         'expires' => $code->getExpires(),
         'redirect_uri' => $code->getRedirectUri(),
         'scope' => $scope
