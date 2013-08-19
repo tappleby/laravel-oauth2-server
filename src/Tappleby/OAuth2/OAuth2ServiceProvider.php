@@ -10,6 +10,7 @@ use Tappleby\OAuth2\Repositories\AccessTokenRepositoryInterface;
 use Tappleby\OAuth2\Repositories\ClientCredentialsRepositoryInterface;
 use Tappleby\OAuth2\Repositories\RefreshTokenRepositoryInterface;
 
+use Tappleby\OAuth2\Storage\AuthorizationCodeStorage;
 use Tappleby\OAuth2\Storage\ClientCredentialsStorage;
 use Tappleby\OAuth2\Storage\RefreshTokenStorage;
 use Tappleby\OAuth2\Storage\UserStorage;
@@ -21,6 +22,7 @@ class OAuth2ServiceProvider extends ServiceProvider {
 	const CLIENT_CREDENTIALS_INTERFACE = 'Tappleby\OAuth2\Repositories\ClientCredentialsRepositoryInterface';
 	const ACCESS_TOKEN_INTERFACE = 'Tappleby\OAuth2\Repositories\AccessTokenRepositoryInterface';
 	const REFRESH_TOKEN_INTERFACE = 'Tappleby\OAuth2\Repositories\RefreshTokenRepositoryInterface';
+  const AUTHORIZATION_CODE_INTERFACE = 'Tappleby\OAuth2\Repositories\AuthorizationCodeRepositoryInterface';
 
 	public function boot()
 	{
@@ -35,10 +37,12 @@ class OAuth2ServiceProvider extends ServiceProvider {
 		$clientCredRepo = $cfg->get('laravel-oauth2-server::repositories.client_credentials', 'Tappleby\OAuth2\Repositories\ClientCredentialsRepositoryEloquent');
 		$accessTokenRepo = $cfg->get('laravel-oauth2-server::repositories.access_token', 'Tappleby\OAuth2\Repositories\AccessTokenRepositoryEloquent');
 		$refreshTokenRepo = $cfg->get('laravel-oauth2-server::repositories.refresh_token', 'Tappleby\OAuth2\Repositories\RefreshTokenRepositoryEloquent');
+    $authCodeRepo = $cfg->get('laravel-oauth2-server::repositories.authorization_code', 'Tappleby\OAuth2\Repositories\AuthorizationCodeRepositoryEloquent');
 
 		$this->app->bind( self::CLIENT_CREDENTIALS_INTERFACE , $clientCredRepo, true );
 		$this->app->bind( self::ACCESS_TOKEN_INTERFACE, $accessTokenRepo, true );
 		$this->app->bind( self::REFRESH_TOKEN_INTERFACE, $refreshTokenRepo, true );
+    $this->app->bind( self::AUTHORIZATION_CODE_INTERFACE, $authCodeRepo, true );
 	}
 
 
@@ -70,6 +74,12 @@ class OAuth2ServiceProvider extends ServiceProvider {
 			return new ClientCredentialsStorage( $clientRepo );
 		});
 
+    $app['oauth2.storage.authorization_code'] = $app->share(function(Container $app) {
+      /** @var AuthorizationCodeRepositoryInterface  $clientRepo */
+      $authCodeRepo = $app->make( self::AUTHORIZATION_CODE_INTERFACE );
+      return new AuthorizationCodeStorage( $authCodeRepo );
+    });
+
 		$app['oauth2.storage.user_storage'] = $app->share(function(Container $app) {
 			return new UserStorage( $app['auth'] );
 		});
@@ -79,7 +89,8 @@ class OAuth2ServiceProvider extends ServiceProvider {
 				$app['oauth2.storage.access_token'],
 				$app['oauth2.storage.refresh_token'],
 				$app['oauth2.storage.client_credentials'],
-				$app['oauth2.storage.user_storage']
+				$app['oauth2.storage.user_storage'],
+        $app['oauth2.storage.authorization_code']
 			);
 
 			return array_filter($storages);

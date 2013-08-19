@@ -24,15 +24,17 @@ return array(
 			return new \Tappleby\OAuth2\Repositories\AccessTokenRepositoryRedis( $redis );
 		},
 
-
-		/**
-		 * The redis repositories have dependencies that cannot be resolved automatically, can define a closure instead.
-		 */
-
 		'refresh_token' => function($app) {
 			$redis = $app['redis'];
 			return new \Tappleby\OAuth2\Repositories\RefreshTokenRepositoryRedis( $redis );
-		}
+		},
+
+    'authorization_code' => function($app) {
+      $redis = $app['redis'];
+      return new \Tappleby\OAuth2\Repositories\AuthorizationCodeRepositoryRedis( $redis );
+    }
+
+
 	),
 
 	/**
