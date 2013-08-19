@@ -62,8 +62,6 @@ class RefreshTokenRepositoryEloquent implements RefreshTokenRepositoryInterface 
 	 */
 	function create($attributes, $save = true)
 	{
-		$attributes['refresh_token'] = $attributes['id'];
-		unset($attributes['id']);
 		$model = $this->createModel()->fill($attributes);
 
 		if($save) $this->save($model);
