@@ -85,7 +85,6 @@ class Controller extends IlluminateController {
 
     $this->server->handleAuthorizeRequest($bridgeRequest, $bridgeResponse, $isAuthorized, $userId);
 
-    $bridgeResponse->headers->set('Location', null);
     return $bridgeResponse;
   }
 }
