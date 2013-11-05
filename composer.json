@@ -4,7 +4,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/tappleby/laravel-auth-token.git"
+      "url": "https://github.com/tappleby/laravel-oauth2-server-common.git"
     }
   ],
   "authors": [
