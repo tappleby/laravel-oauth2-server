@@ -54,4 +54,38 @@ class Controller extends IlluminateController {
 
 		return $this->server->handleTokenRequest($bridgeRequest, $bridgeResponse);
 	}
+
+  public function getAuthorize() {
+    $bridgeRequest = BridgeRequest::createFromRequest($this->request);
+    $bridgeResponse = new BridgeResponse;
+
+    $authRequestData = $this->server->validateAuthorizeRequest($bridgeRequest, $bridgeResponse);
+
+    if(!$authRequestData) {
+      return $bridgeResponse;
+    }
+
+    return $this->onGetAuthorized($authRequestData);
+  }
+
+  public function onGetAuthorized($authRequestData) {
+    throw new \RuntimeException('Must Implement onGetAuthorized method');
+  }
+
+  public function onPostAuthorized() {
+    throw new \RuntimeException('Must Implement onPostAuthorized method');
+  }
+
+  public function postAuthorize() {
+    $bridgeRequest = BridgeRequest::createFromRequest($this->request);
+    $bridgeResponse = new BridgeResponse;
+
+    $userId = $this->onPostAuthorized();
+    $isAuthorized = (bool)$userId;
+
+    $this->server->handleAuthorizeRequest($bridgeRequest, $bridgeResponse, $isAuthorized, $userId);
+
+    $bridgeResponse->headers->set('Location', null);
+    return $bridgeResponse;
+  }
 }
