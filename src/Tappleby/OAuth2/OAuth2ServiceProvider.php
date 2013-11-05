@@ -55,7 +55,6 @@ class OAuth2ServiceProvider extends ServiceProvider {
 	{
 		$app = $this->app;
 
-
 		$app['oauth2.storage.access_token'] = $app->share(function(Container $app) {
 			/** @var AccessTokenRepositoryInterface  $tokenRepo */
 			$tokenRepo = $app->make( self::ACCESS_TOKEN_INTERFACE );
