@@ -11,7 +11,7 @@ namespace Tappleby\OAuth2\Repositories;
 use Illuminate\Database\Eloquent\Model;
 use Tappleby\OAuth2\Models\AuthorizationCodeInterface;
 
-class AuthorizationCodeRepositoryEloquent implements AuthorizationCodeRepositoryInterface {
+class AuthorizationCodeRepositoryEloquent implements AuthorizationCodeRepositoryInterface, PurgeExpiredInterface {
 
 	/** @var \Tappleby\OAuth2\Models\AuthorizationCode */
 	protected $model = 'Tappleby\OAuth2\Models\AuthorizationCode';
@@ -105,5 +105,16 @@ class AuthorizationCodeRepositoryEloquent implements AuthorizationCodeRepository
 
 		return $deleted;
 	}
+
+	/**
+	 * Purges expired tokens or codes.
+	 *
+	 * @return void
+	 */
+	function purgeExpired()
+	{
+		$this->createModel()->where('expires', '<=', new \DateTime())->delete();
+	}
+
 
 }

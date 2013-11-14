@@ -6,7 +6,7 @@ namespace Tappleby\OAuth2\Repositories;
 use Tappleby\OAuth2\Models\AccessTokenInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class AccessTokenRepositoryEloquent implements AccessTokenRepositoryInterface {
+class AccessTokenRepositoryEloquent implements AccessTokenRepositoryInterface, PurgeExpiredInterface {
 
 	/** @var \Tappleby\OAuth2\Models\AccessToken */
 	protected $model = 'Tappleby\OAuth2\Models\AccessToken';
@@ -99,6 +99,16 @@ class AccessTokenRepositoryEloquent implements AccessTokenRepositoryInterface {
 		}
 
 		return $deleted;
+	}
+
+	/**
+	 * Purges expired tokens or codes.
+	 *
+	 * @return void
+	 */
+	function purgeExpired()
+	{
+		$this->createModel()->where('expires', '<=', new \DateTime())->delete();
 	}
 
 
