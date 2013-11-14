@@ -2,6 +2,7 @@
 
 namespace Tappleby\OAuth2;
 
+use Tappleby\OAuth2\Commands\PurgeExpiredTokensCommand;
 use Tappleby\OAuth2\Filter\AccessFilter;
 use Tappleby\OAuth2\Server\Server;
 use Tappleby\OAuth2\Storage\AccessTokenStorage;
@@ -119,6 +120,20 @@ class OAuth2ServiceProvider extends ServiceProvider {
 
 			return new AccessFilter($server, $events, $clientRepo, $userProvider);
 		});
+
+		/**
+		 * Register commands
+		 */
+
+		$this->app['command.oauth2-server.purge-expired-tokens'] = $this->app->share(function ($app) {
+			return new PurgeExpiredTokensCommand(
+				$app[self::ACCESS_TOKEN_INTERFACE],
+				$app[self::AUTHORIZATION_CODE_INTERFACE],
+				$app[self::REFRESH_TOKEN_INTERFACE]
+			);
+		});
+
+		$this->commands('command.oauth2-server.purge-expired-tokens');
 
 	}
 
