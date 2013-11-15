@@ -29,6 +29,9 @@
   },
 
   "autoload": {
+    "classmap": [
+      "src/migrations"
+    ],
     "psr-0": {
       "Tappleby\\OAuth2": "src/"
     }
