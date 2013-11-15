@@ -26,7 +26,7 @@ class CreateOauthRefreshTokensTable extends Migration {
       $table->foreign('client_id')
         ->references('id')
         ->on('oauth_clients')
-        ->onDelete('no action')
+        ->onDelete('cascade')
         ->onUpdate('cascade');
 		});
 	}
