@@ -39,6 +39,7 @@ return array(
 
 
 	),
+
 	/**
 	 * Raw configuration for oauth server.
 	 */
@@ -51,6 +52,7 @@ return array(
 		'enforce_state' => true,
 		'require_exact_redirect_uri' => true,
 		'allow_implicit' => false,
+		'access_token_return_user_id' => true
 	)
 
 );
