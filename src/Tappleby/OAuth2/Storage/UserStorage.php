@@ -8,20 +8,17 @@ class UserStorage implements \OAuth2\Storage\UserCredentialsInterface {
 	/** @var \Illuminate\Auth\Guard  */
 	protected $guard;
 
-	protected $usernameField;
+	protected $credentialsFormatter;
 
-	function __construct($guard, $usernameField = 'email')
+	function __construct($guard, $credentialsFormatter)
 	{
 		$this->guard = $guard;
-		$this->usernameField = $usernameField;
+		$this->credentialsFormatter = $credentialsFormatter;
 	}
 
 	public function checkUserCredentials($username, $password)
 	{
-		$creds = array(
-			$this->usernameField => $username,
-			'password' => $password
-		);
+		$creds = call_user_func($this->credentialsFormatter, $username, $password);
 
 		return $this->guard->attempt($creds, false, false);
 	}
@@ -29,9 +26,7 @@ class UserStorage implements \OAuth2\Storage\UserCredentialsInterface {
 
 	public function getUserDetails($username)
 	{
-		$creds = array(
-			$this->usernameField => $username
-		);
+		$creds = call_user_func($this->credentialsFormatter, $username, null);
 
 		/** @var \Illuminate\Auth\UserInterface $user */
 		$user = $this->guard->getProvider()->retrieveByCredentials($creds) ?: false;

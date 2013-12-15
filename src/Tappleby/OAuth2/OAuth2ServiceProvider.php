@@ -81,7 +81,8 @@ class OAuth2ServiceProvider extends ServiceProvider {
     });
 
 		$app['oauth2.storage.user_storage'] = $app->share(function(Container $app) {
-			return new UserStorage( $app['auth'] );
+			$credsFormatter = $app['config']->get('laravel-oauth2-server::user_storage.format_credentials', null);
+			return new UserStorage( $app['auth'], $credsFormatter );
 		});
 
 		$app['oauth2.storage'] = $app->share(function(Container $app) {

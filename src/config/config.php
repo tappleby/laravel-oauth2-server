@@ -2,6 +2,15 @@
 
 return array(
 
+	'user_storage' => array(
+		'format_credentials' => function ($username, $password) {
+			return array(
+				'email' => $username,
+				'password' => $password
+			);
+		}
+	),
+
 	/**
 	 * Bindings for the various repositories.
 	 */
