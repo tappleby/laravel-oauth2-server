@@ -8,12 +8,12 @@
 namespace Tappleby\OAuth2\ResponseType;
 
 
-use OAuth2_Storage_AccessTokenInterface;
-use OAuth2_Storage_RefreshTokenInterface;
+use OAuth2\Storage\AccessTokenInterface as AccessTokenStorageInterface;
+use OAuth2\Storage\RefreshTokenInterface as RefreshTokenStorageInterface;
 
-class AccessTokenResponseType extends \OAuth2_ResponseType_AccessToken {
+class AccessTokenResponseType extends \OAuth2\ResponseType\AccessToken  {
 
-	public function __construct(OAuth2_Storage_AccessTokenInterface $tokenStorage, OAuth2_Storage_RefreshTokenInterface $refreshStorage = null, array $config = array())
+	public function __construct(AccessTokenStorageInterface $tokenStorage, RefreshTokenStorageInterface $refreshStorage = null, array $config = array())
 	{
 		parent::__construct($tokenStorage, $refreshStorage, $config);
 	}

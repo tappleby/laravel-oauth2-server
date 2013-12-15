@@ -2,10 +2,9 @@
 
 namespace Tappleby\OAuth2\Storage;
 
-
 use Tappleby\OAuth2\Repositories\AccessTokenRepositoryInterface;
 
-class AccessTokenStorage implements \OAuth2_Storage_AccessTokenInterface {
+class AccessTokenStorage implements \OAuth2\Storage\AccessTokenInterface  {
 
 	/** @var \Tappleby\OAuth2\Repositories\AccessTokenRepositoryInterface */
 	protected $repo;

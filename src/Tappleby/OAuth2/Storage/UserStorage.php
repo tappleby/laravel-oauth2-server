@@ -3,7 +3,7 @@
 namespace Tappleby\OAuth2\Storage;
 
 
-class UserStorage implements \OAuth2_Storage_UserCredentialsInterface {
+class UserStorage implements \OAuth2\Storage\UserCredentialsInterface {
 
 	/** @var \Illuminate\Auth\Guard  */
 	protected $guard;

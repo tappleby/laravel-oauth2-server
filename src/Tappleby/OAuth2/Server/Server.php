@@ -3,13 +3,15 @@
 namespace Tappleby\OAuth2\Server;
 
 
-use OAuth2_ClientAssertionTypeInterface;
-use OAuth2_ScopeInterface;
-use OAuth2_TokenTypeInterface;
+use OAuth2\Server as BaseServer;
+use OAuth2\TokenType\TokenTypeInterface;
+use OAuth2\ScopeInterface;
+use OAuth2\ClientAssertionType\ClientAssertionTypeInterface;
+
 use Tappleby\OAuth2\ResponseType\AccessTokenResponseType;
 
-class Server extends \OAuth2_Server {
-	public function __construct($storage = array(), array $config = array(), array $grantTypes = array(), array $responseTypes = array(), OAuth2_TokenTypeInterface $tokenType = null, OAuth2_ScopeInterface $scopeUtil = null, OAuth2_ClientAssertionTypeInterface $clientAssertionType = null)
+class Server extends BaseServer {
+	public function __construct($storage = array(), array $config = array(), array $grantTypes = array(), array $responseTypes = array(), TokenTypeInterface $tokenType = null, ScopeInterface $scopeUtil = null, ClientAssertionTypeInterface $clientAssertionType = null)
 	{
 		parent::__construct($storage, $config, $grantTypes, $responseTypes, $tokenType, $scopeUtil, $clientAssertionType);
 	}

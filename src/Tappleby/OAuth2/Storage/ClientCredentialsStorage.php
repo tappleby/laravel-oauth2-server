@@ -5,7 +5,7 @@ namespace Tappleby\OAuth2\Storage;
 
 use Tappleby\OAuth2\Repositories\ClientCredentialsRepositoryInterface;
 
-class ClientCredentialsStorage implements \OAuth2_Storage_ClientCredentialsInterface {
+class ClientCredentialsStorage implements \OAuth2\Storage\ClientCredentialsInterface {
 
 	/** @var ClientCredentialsRepositoryInterface */
 	protected $repo;

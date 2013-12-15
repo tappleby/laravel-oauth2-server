@@ -19,8 +19,8 @@
     "illuminate/auth": "4.0.x",
     "illuminate/database": "4.0.x",
     "illuminate/routing": "4.0.x",
-    "bshaffer/oauth2-server-php": "v0.9",
-    "bshaffer/oauth2-server-httpfoundation-bridge": "v0.9",
+    "bshaffer/oauth2-server-php": "v1.0",
+    "bshaffer/oauth2-server-httpfoundation-bridge": "v1.0",
     "tappleby/laravel-oauth2-server-common": "dev-master"
   },
   "require-dev": {
