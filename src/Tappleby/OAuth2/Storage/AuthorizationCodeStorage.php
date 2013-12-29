@@ -4,7 +4,7 @@
 namespace Tappleby\OAuth2\Storage;
 
 
-class AuthorizationCodeStorage implements \OAuth2_Storage_AuthorizationCodeInterface {
+class AuthorizationCodeStorage implements \OAuth2\Storage\AuthorizationCodeInterface {
 
   /** @var \Tappleby\OAuth2\Repositories\AuthorizationCodeRepositoryInterface */
   protected $repo;

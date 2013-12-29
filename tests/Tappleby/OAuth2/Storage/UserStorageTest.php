@@ -6,12 +6,21 @@ use Mockery as m;
 
 class UserStorageTest extends \PHPUnit_Framework_TestCase {
 
+	public function formatCreds() {
+		return function ($username, $password) {
+			return array(
+				'username' => $username,
+				'password' => $password
+			);
+		};
+	}
+
 	public function testInvalidCredentials()
 	{
 		$guard = m::mock('\Illuminate\Auth\Guard');
 		$guard->shouldReceive('attempt')->andReturn(false);
 
-		$userStorage = new UserStorage($guard);
+		$userStorage = new UserStorage($guard, $this->formatCreds());
 
 		$this->assertFalse($userStorage->checkUserCredentials('foo', 'bar'));
 	}
@@ -21,7 +30,7 @@ class UserStorageTest extends \PHPUnit_Framework_TestCase {
 		$guard = m::mock('\Illuminate\Auth\Guard');
 		$guard->shouldReceive('attempt')->andReturn(true);
 
-		$userStorage = new UserStorage($guard);
+		$userStorage = new UserStorage($guard, $this->formatCreds());
 
 		$this->assertTrue($userStorage->checkUserCredentials('foo', 'bar'));
 	}
@@ -35,10 +44,22 @@ class UserStorageTest extends \PHPUnit_Framework_TestCase {
 			'password' => 'bar'
 		);
 
+
+
 		$guard->shouldReceive('attempt')->with($userCreds, m::any(), m::any())->andReturn(false);
 
-		$userStorage = new UserStorage($guard, 'username');
+		$seenUser = null;
+		$seenPass = null;
+
+		$userStorage = new UserStorage($guard, function ($u, $p) use($userCreds, &$seenUser, &$seenPass) {
+			$seenUser = $u;
+			$seenPass = $p;
+			return $userCreds;
+		});
 		$userStorage->checkUserCredentials($userCreds['username'], $userCreds['password']);
+
+		$this->assertEquals('foo', $seenUser);
+		$this->assertEquals('bar', $seenPass);
 	}
 
 

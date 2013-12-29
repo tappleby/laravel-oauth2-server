@@ -59,13 +59,23 @@ class Controller extends IlluminateController {
     $bridgeRequest = BridgeRequest::createFromRequest($this->request);
     $bridgeResponse = new BridgeResponse;
 
-    $authRequestData = $this->server->validateAuthorizeRequest($bridgeRequest, $bridgeResponse);
+    if($this->server->validateAuthorizeRequest($bridgeRequest, $bridgeResponse)) {
 
-    if(!$authRequestData) {
-      return $bridgeResponse;
+	    $authController = $this->server->getAuthorizeController();
+
+	    //TODO: Break out into class?
+	    $authRequestData = array(
+		    'scope' => $authController->getScope(),
+		    'state' => $authController->getState(),
+		    'client_id' => $authController->getClientId(),
+		    'redirect_uri' => $authController->getRedirectUri(),
+		    'response_type' => $authController->getResponseType()
+	    );
+
+	    $bridgeResponse = $this->onGetAuthorized($authRequestData);
     }
 
-    return $this->onGetAuthorized($authRequestData);
+    return $bridgeResponse;
   }
 
   public function onGetAuthorized($authRequestData) {

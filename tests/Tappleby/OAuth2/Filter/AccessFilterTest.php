@@ -29,7 +29,7 @@ class AccessFilterTest extends \PHPUnit_Framework_TestCase
 
   protected function setUp()
   {
-    $this->mockScopeUtil = m::mock('OAuth2_ScopeInterface');
+    $this->mockScopeUtil = m::mock('OAuth2\ScopeInterface');
     $this->mockServer = m::mock('Tappleby\OAuth2\Server\Server');
     $this->mockServer->shouldReceive('getScopeUtil')->andReturn( $this->mockScopeUtil );
 
@@ -66,7 +66,7 @@ class AccessFilterTest extends \PHPUnit_Framework_TestCase
     $this->mockDispatcher->shouldReceive('until')->once()->andReturnNull();
     $this->mockDispatcher->shouldReceive('fire')->once()->with('oauth.access.failed');
 
-    $mockResourceController = m::mock('OAuth2_Controller_ResourceControllerInterface');
+    $mockResourceController = m::mock('OAuth2\Controller\ResourceControllerInterface');
     $mockResourceController->shouldReceive('verifyResourceRequest')->andReturn(false);
     $this->mockServer->shouldReceive('getResourceController')->once()->andReturn($mockResourceController);
 
@@ -78,7 +78,7 @@ class AccessFilterTest extends \PHPUnit_Framework_TestCase
   {
     $this->mockDispatcher->shouldReceive('until')->once()->andReturnNull();
 
-    $mockResourceController = m::mock('OAuth2_Controller_ResourceControllerInterface');
+    $mockResourceController = m::mock('OAuth2\Controller\ResourceControllerInterface');
     $mockResourceController->shouldReceive('verifyResourceRequest')->andReturn(true);
     $mockResourceController->shouldReceive('getAccessTokenData')->once()->andReturn(array(
       'client_id' => 1, 'scope' => null
@@ -100,7 +100,7 @@ class AccessFilterTest extends \PHPUnit_Framework_TestCase
   {
     $this->mockDispatcher->shouldReceive('until')->once()->andReturnNull();
 
-    $mockResourceController = m::mock('OAuth2_Controller_ResourceControllerInterface');
+    $mockResourceController = m::mock('OAuth2\Controller\ResourceControllerInterface');
     $mockResourceController->shouldReceive('verifyResourceRequest')->andReturn(true);
     $mockResourceController->shouldReceive('getAccessTokenData')->once()->andReturn(array(
       'client_id' => 1, 'user_id' => 2, 'scope' => null
@@ -124,7 +124,7 @@ class AccessFilterTest extends \PHPUnit_Framework_TestCase
   {
     $this->mockDispatcher->shouldReceive('until')->once()->andReturnNull();
 
-    $mockResourceController = m::mock('OAuth2_Controller_ResourceControllerInterface');
+    $mockResourceController = m::mock('OAuth2\Controller\ResourceControllerInterface');
     $mockResourceController->shouldReceive('verifyResourceRequest')->andReturn(true);
     $mockResourceController->shouldReceive('getAccessTokenData')->once()->andReturn(array(
       'client_id' => 1, 'scope' => 'fiz bin'

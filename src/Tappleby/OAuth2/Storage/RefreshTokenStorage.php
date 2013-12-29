@@ -5,7 +5,7 @@ namespace Tappleby\OAuth2\Storage;
 
 use Tappleby\OAuth2\Repositories\RefreshTokenRepositoryInterface;
 
-class RefreshTokenStorage implements \OAuth2_Storage_RefreshTokenInterface {
+class RefreshTokenStorage implements \OAuth2\Storage\RefreshTokenInterface {
 	/** @var \Tappleby\OAuth2\Repositories\RefreshTokenRepositoryInterface */
 	protected $repo;
 
