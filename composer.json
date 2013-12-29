@@ -15,10 +15,10 @@
   ],
   "require": {
     "php": ">=5.3.0",
-    "illuminate/support": "~4",
-    "illuminate/auth": "~4",
-    "illuminate/database": "~4",
-    "illuminate/routing": "~4",
+    "illuminate/support": ">=4.0.0,<4.2",
+    "illuminate/auth": ">=4.0.0,<4.2",
+    "illuminate/database": ">=4.0.0,<4.2",
+    "illuminate/routing": ">=4.0.0,<4.2",
     "bshaffer/oauth2-server-php": "v1.0",
     "bshaffer/oauth2-server-httpfoundation-bridge": "v1.0",
     "tappleby/laravel-oauth2-server-common": "dev-master"
