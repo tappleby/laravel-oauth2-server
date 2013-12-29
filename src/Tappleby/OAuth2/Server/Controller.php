@@ -3,13 +3,12 @@
 namespace Tappleby\OAuth2\Server;
 
 use Illuminate\Container\Container;
-use Illuminate\Routing\Controllers\Controller as IlluminateController;
 use Illuminate\Routing\Router;
 
 use OAuth2\HttpFoundationBridge\Request as BridgeRequest;
 use OAuth2\HttpFoundationBridge\Response as BridgeResponse;
 
-class Controller extends IlluminateController {
+class Controller extends \Controller {
 
 	/** @var \Symfony\Component\HttpFoundation\Request */
 	protected $request;
