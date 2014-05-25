@@ -3,6 +3,7 @@
 namespace Tappleby\OAuth2\Storage;
 
 
+use Tappleby\OAuth2\Models\ScopeInterface;
 use Tappleby\OAuth2\Repositories\ClientCredentialsRepositoryInterface;
 
 class ClientCredentialsStorage implements \OAuth2\Storage\ClientCredentialsInterface {
@@ -49,10 +50,19 @@ class ClientCredentialsStorage implements \OAuth2\Storage\ClientCredentialsInter
 			return false;
 		}
 
-		return array(
+		$clientDetails = array(
 			'client_id' => $client->getId(),
-			'redirect_uri' => $client->getRedirectUri()
+			'redirect_uri' => $client->getRedirectUri(),
 		);
+
+
+		if ($client instanceof ScopeInterface) {
+			if (is_array($scopes = $client->getScopes())) {
+				$clientDetails['scope'] = implode(' ', $scopes);
+			}
+		}
+
+		return $clientDetails;
 	}
 
 	/**
@@ -79,6 +89,45 @@ class ClientCredentialsStorage implements \OAuth2\Storage\ClientCredentialsInter
 
 
 		return in_array($grant_type, $client->getRestrictedGrantTypes());
+	}
+
+	/**
+	 * Determine if the client is a "public" client, and therefore
+	 * does not require passing credentials for certain grant types
+	 *
+	 * @param $client_id
+	 * Client identifier to be check with.
+	 *
+	 * @return
+	 * true if the client is public, and false if it isn't.
+	 * @endcode
+	 *
+	 * @see http://tools.ietf.org/html/rfc6749#section-2.3
+	 * @see https://github.com/bshaffer/oauth2-server-php/issues/257
+	 *
+	 * @ingroup oauth2_section_2
+	 */
+	public function isPublicClient($client_id)
+	{
+		if (($client = $this->repo->find($client_id))) {
+			$secret = $client->getSecret();
+			$isPublic = empty($secret);
+		} else {
+			$isPublic = false;
+		}
+
+		return $isPublic;
+	}
+
+	/**
+	 * Get the scope associated with this client
+	 *
+	 * @return
+	 * STRING the space-delineated scope list for the specified client_id
+	 */
+	public function getClientScope($client_id)
+	{
+		// TODO: Implement getClientScope() method.
 	}
 
 

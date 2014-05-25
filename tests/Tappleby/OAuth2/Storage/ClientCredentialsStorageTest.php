@@ -125,5 +125,21 @@ class ClientCredentialsStorageTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( $clientStorage->checkRestrictedGrantType('foo', 'bar') );
 	}
 
+	public function testClientDetailsHasScopeWhenImplementingScopeInterface()
+	{
+		$client = m::mock('Tappleby\OAuth2\Models\ClientCredentialsInterface, Tappleby\OAuth2\Models\ScopeInterface');
+		$client->shouldReceive('getScopes')->once()->andReturn(array('foo', 'bar'));
+		$client->shouldIgnoreMissing();
+
+		$clientRepo = m::mock('Tappleby\OAuth2\Repositories\ClientCredentialsRepositoryInterface');
+		$clientRepo->shouldReceive('find')->andReturn($client);
+
+		$clientStorage = new ClientCredentialsStorage($clientRepo);
+
+		$details = $clientStorage->getClientDetails('foo');
+
+		$this->assertArrayHasKey('scope', $details);
+		$this->assertEquals($details['scope'], 'foo bar');
+	}
 
 }
