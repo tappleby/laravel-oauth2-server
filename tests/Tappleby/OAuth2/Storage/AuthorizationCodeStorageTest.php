@@ -7,6 +7,9 @@ use Mockery as m;
 
 class AuthorizationCodeStorageTest extends \PHPUnit_Framework_TestCase
 {
+	protected function tearDown() {
+		m::close();
+	}
 
   protected function getAuthCode()
   {

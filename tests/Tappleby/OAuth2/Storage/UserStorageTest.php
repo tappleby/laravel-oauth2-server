@@ -6,6 +6,10 @@ use Mockery as m;
 
 class UserStorageTest extends \PHPUnit_Framework_TestCase {
 
+	protected function tearDown() {
+		m::close();
+	}
+
 	public function formatCreds() {
 		return function ($username, $password) {
 			return array(

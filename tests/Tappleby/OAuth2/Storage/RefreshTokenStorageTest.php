@@ -6,6 +6,11 @@ namespace Tappleby\OAuth2\Storage;
 use Mockery as m;
 
 class RefreshTokenStorageTest extends \PHPUnit_Framework_TestCase {
+
+	protected function tearDown() {
+		m::close();
+	}
+
   protected function getRefreshToken() {
     $tk = m::mock('Tappleby\OAuth2\Models\RefreshTokenInterface');
     $tk->shouldReceive('getScopes')->andReturn(array('foo', 'bar'));

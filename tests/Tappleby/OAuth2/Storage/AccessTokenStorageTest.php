@@ -7,6 +7,10 @@ use Mockery as m;
 
 class AccessTokenStorageTest extends \PHPUnit_Framework_TestCase {
 
+	protected function tearDown() {
+		m::close();
+	}
+
   protected function getAccessToken() {
     $tk = m::mock('Tappleby\OAuth2\Models\AccessTokenInterface');
     $tk->shouldReceive('getScopes')->andReturn(array('foo', 'bar'));
