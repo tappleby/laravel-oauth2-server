@@ -11,6 +11,6 @@ env:
 
 before_script:
   - curl -s http://getcomposer.org/installer | php
-  - php composer.phar require laravel/framework:${LARAVEL_VERSION}
+  - php composer.phar require laravel/framework:${LARAVEL_VERSION} --no-interaction
 
 script: phpunit
