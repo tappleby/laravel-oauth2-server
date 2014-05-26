@@ -10,7 +10,11 @@ env:
   - LARAVEL_VERSION=4.1.*
 
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar require laravel/framework:${LARAVEL_VERSION} --no-interaction
+  - composer self-update
+  - composer require illuminate/support:${LARAVEL_VERSION} --no-update
+  - composer require illuminate/auth:${LARAVEL_VERSION} --no-update
+  - composer require illuminate/database:${LARAVEL_VERSION} --no-update
+  - composer require illuminate/routing:${LARAVEL_VERSION} --no-update
+  - composer install --no-interaction --prefer-source --dev
 
 script: phpunit
