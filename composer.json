@@ -15,7 +15,7 @@
     "illuminate/routing": "~4.0",
     "bshaffer/oauth2-server-php": "v1.3",
     "bshaffer/oauth2-server-httpfoundation-bridge": "v1.0",
-    "tappleby/laravel-oauth2-server-common": "dev-master"
+    "tappleby/laravel-oauth2-server-common": "0.1.*"
   },
   "require-dev": {
     "mockery/mockery": "0.8.*",
@@ -29,6 +29,5 @@
     "psr-0": {
       "Tappleby\\OAuth2": "src/"
     }
-  },
-  "minimum-stability": "dev"
+  }
 }
