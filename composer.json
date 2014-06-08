@@ -11,7 +11,7 @@
     "php": ">=5.3.0",
     "illuminate/support": "~4.0",
     "illuminate/auth": "~4.0",
-    "illuminate/database": "~4.0.",
+    "illuminate/database": "~4.0",
     "illuminate/routing": "~4.0",
     "bshaffer/oauth2-server-php": "v1.3",
     "bshaffer/oauth2-server-httpfoundation-bridge": "v1.0",
