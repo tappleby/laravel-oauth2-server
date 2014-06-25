@@ -4,6 +4,7 @@
 namespace Tappleby\OAuth2\Storage;
 
 use Mockery as m;
+use Tappleby\OAuth2\Models\RefreshTokenBasic;
 
 class RefreshTokenStorageTest extends \PHPUnit_Framework_TestCase {
 
@@ -12,11 +13,9 @@ class RefreshTokenStorageTest extends \PHPUnit_Framework_TestCase {
 	}
 
   protected function getRefreshToken() {
-    $tk = m::mock('Tappleby\OAuth2\Models\RefreshTokenInterface');
-    $tk->shouldReceive('getScopes')->andReturn(array('foo', 'bar'));
-    $tk->shouldIgnoreMissing();
-
-    return $tk;
+	  return new RefreshTokenBasic(
+			'foo_id', 'foo_client', 'foo_user', 1337, array('foo', 'bar')
+	  );
   }
 
   public function testReturnsNullOnInvalidToken()
@@ -39,10 +38,9 @@ class RefreshTokenStorageTest extends \PHPUnit_Framework_TestCase {
     $tk = $refreshTokenStorage->getRefreshToken(1);
     $this->assertInternalType('array', $tk);
 
-    $this->assertArrayHasKey('client_id', $tk);
-    $this->assertArrayHasKey('user_id', $tk);
-    $this->assertArrayHasKey('expires', $tk);
-    $this->assertArrayHasKey('scope', $tk);
+	  $this->assertEquals('foo_client', $tk['client_id']);
+	  $this->assertEquals('foo_user', $tk['user_id']);
+	  $this->assertEquals(1337, $tk['expires']);
     $this->assertEquals('foo bar', $tk['scope']);
   }
 
