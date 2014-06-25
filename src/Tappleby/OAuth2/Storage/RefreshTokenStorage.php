@@ -27,6 +27,7 @@ class RefreshTokenStorage implements \OAuth2\Storage\RefreshTokenInterface {
 		}
 
 		return array(
+			'refresh_token' => $token->getId(),
 			'client_id' => $token->getClientId(),
 			'user_id' => $token->getUserId(),
 			'expires' => $token->getExpires(),

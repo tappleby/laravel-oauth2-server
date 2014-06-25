@@ -38,6 +38,7 @@ class RefreshTokenStorageTest extends \PHPUnit_Framework_TestCase {
     $tk = $refreshTokenStorage->getRefreshToken(1);
     $this->assertInternalType('array', $tk);
 
+	  $this->assertEquals('foo_id', $tk['refresh_token']);
 	  $this->assertEquals('foo_client', $tk['client_id']);
 	  $this->assertEquals('foo_user', $tk['user_id']);
 	  $this->assertEquals(1337, $tk['expires']);
